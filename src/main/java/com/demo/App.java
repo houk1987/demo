@@ -3,12 +3,17 @@
  */
 package com.demo;
 
+import com.demo.mybatis.domain.User;
+import com.demo.mybatis.mapper.UserMapper;
+import com.demo.mybatis.sqlSession.SqlSessionManager;
+import org.apache.ibatis.session.SqlSession;
+
 public class App {
-    public String getGreeting() {
-        return "Hello world!.";
-    }
 
     public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
+        SqlSession sqlSession = SqlSessionManager.getInstance().openSqlSession();
+        UserMapper mapper = sqlSession.getMapper(UserMapper.class);
+        User userName = mapper.findUserName("1");
+        System.out.println(userName.getId());
     }
 }
